@@ -1,0 +1,20 @@
+answerable | How many attention heads are used in the base Transformer model? | 8 | attention p.5; attention p.9
+answerable | How many identical layers are used in the Transformer encoder and decoder? | 6 layers each | attention p.3
+answerable | What is the model dimension (d_model) used in the base Transformer? | 512 | attention p.3; attention p.5; attention p.9
+answerable | What is the inner-layer dimension of the Transformer's feed-forward network? | 2048 | attention p.5; attention p.9
+answerable | How many parameters does the Helium language model have, and how many tokens was it pretrained on? | 7 billion parameters, 2.1 trillion tokens | moshi p.3
+answerable | What is the frame rate of the Mimi audio codec? | 12.5 Hz | moshi p.10; moshi p.8; moshi p.11
+answerable | What theoretical and practical latency does the Moshi model achieve? | 160 ms theoretical, 200 ms practical | moshi p.1
+answerable | What are the two main components of the Dynamic Chunking mechanism? | A routing module and a smoothing module | dynamic_chunking p.2
+answerable | What are the main stages of the H-Net architecture? | Encoder, then a downsampled main network, then upsampling and a decoder | dynamic_chunking p.2
+answerable | What does the auxiliary loss function in Dynamic Chunking aim to control? | The downsampling ratio | dynamic_chunking p.2; dynamic_chunking p.8
+answerable | When the base Transformer reads a sentence, how many parallel views of it does it compute at once? | 8 (the heads) | attention p.5; attention p.9
+answerable | How many sound slices per second does Moshi's audio compressor produce? | 12.5 | moshi p.10; moshi p.8; moshi p.11
+unanswerable | What was the exact electricity cost in US dollars for training the original Transformer model? | none | none
+unanswerable | What was the exact total electricity bill for training the Moshi model? | none | none
+unanswerable | How many individual users tested the H-Net model before publication? | none | none
+unanswerable | What is the exact carbon footprint in kilograms of CO2 produced during H-Net training? | none | none
+unanswerable | What BLEU score did the base Transformer reach on English-to-Chinese translation? | none | none
+tricky | How many attention heads are used in the original Transformer and in the Transformer modules of Mimi? | Both 8 | attention p.5; attention p.9; moshi p.10
+tricky | What does the number 12.5 represent in Moshi, and what does 4.5 to 5 represent in Dynamic Chunking? | 12.5 is Mimi's frame rate in Hz. 4.5-5 is the bytes per chunk H-Net learns | moshi p.10; moshi p.8; dynamic_chunking p.3
+tricky | Which paper reports a theoretical latency of 160 ms for real-time spoken dialogue? | The Moshi paper | moshi p.1

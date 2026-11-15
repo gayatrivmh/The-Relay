@@ -1,0 +1,70 @@
+﻿SCENARIOS FOUND IN results.csv
+  probe                            real      20 rows
+  limit_test                       real      40 rows
+  quality_run1_crashed             real      14 rows
+  quality_run_failed_no_answer     real      20 rows
+  quality                          real      100 rows
+  steady                           stand-in  60 rows
+  burst                            stand-in  100 rows
+  sustained_overload               stand-in  180 rows
+  per_minute_limit_halved_light    stand-in  60 rows
+  daily_budget_exhausted           stand-in  30 rows
+  per_minute_limit_halved          stand-in  180 rows
+  retry_none_burst                 stand-in  100 rows
+  retry_sync_burst                 stand-in  100 rows
+  retry_jitter_burst               stand-in  100 rows
+  retry_none_overload              stand-in  180 rows
+  retry_sync_overload              stand-in  180 rows
+  retry_jitter_overload            stand-in  180 rows
+  daily_budget_exhausted_failfast  stand-in  30 rows
+  gate6_burst                      stand-in  100 rows
+  gate6_overload                   stand-in  180 rows
+  gate12_burst                     stand-in  100 rows
+  gate12_overload                  stand-in  180 rows
+  gate24_burst                     stand-in  100 rows
+  gate24_overload                  stand-in  180 rows
+  tokengate_burst                  stand-in  100 rows
+  tokengate_overload               stand-in  180 rows
+  tokengate_halved_overload        stand-in  180 rows
+
+TABLE 2a  (percentiles use ok requests only; nearest-rank rule)
+scenario | source | sent | duration s | offered per min | first token p50/p95/p99 ms | total p50/p95/p99 ms
+probe | real | 20 | 31.9 | 36.9 | 417.4 / 1228.9 / 2001.2 | 454.4 / 1249.8 / 2044.2
+limit_test | real | 40 | 2.5 | 155998.9 | 1681.6 / 2499.3 / 2516.4 | 1682.5 / 2503.2 / 2523.7
+steady | stand-in | 60 | 178.9 | 20.0 | 1307.6 / 2957.2 / 4306.4 | 2169.6 / 4166.9 / 4938.7
+burst | stand-in | 100 | 24.7 | 1200.0 | 3289.0 / 6961.1 / 6961.1 | 8341.5 / 19996.3 / 19996.3
+sustained_overload | stand-in | 180 | 187.6 | 60.0 | 1927.2 / 7261.8 / 9507.5 | 3069.9 / 11822.7 / 15590.4
+per_minute_limit_halved_light | stand-in | 60 | 180.1 | 20.0 | 1403.6 / 3177.0 / 3372.0 | 2077.2 / 4010.5 / 5015.7
+per_minute_limit_halved | stand-in | 180 | 190.9 | 60.0 | 2573.9 / 10522.9 / 11661.2 | 5007.6 / 16667.0 / 19440.3
+daily_budget_exhausted | stand-in | 30 | 72.2 | 30.0 | - / - / - | - / - / -
+
+TABLE 2b
+scenario | succeeded % | rate-limited % | timed out or error % | ok but over 10 s % | retries per request | peak in flight | tokens per answer | cost per 1000 answers (USD)
+probe | 100.0 | 0.0 | 0.0 | 0.0 | 0.0 | 1 | 128.1 | 0.0202
+limit_test | 75.0 | 25.0 | 0.0 | 0.0 | 0.0 | 40 | 94.4 | 0.0110
+steady | 100.0 | 0.0 | 0.0 | 0.0 | 0.0 | 2 | 2232.6 | 0.2148
+burst | 19.0 | 61.0 | 20.0 | 42.1 | 2.6 | 97 | 2236.6 | 0.5720
+sustained_overload | 73.9 | 26.1 | 0.0 | 9.8 | 1.9 | 12 | 2240.9 | 0.2404
+per_minute_limit_halved_light | 100.0 | 0.0 | 0.0 | 0.0 | 0.0 | 2 | 2236.0 | 0.2158
+per_minute_limit_halved | 27.8 | 72.2 | 0.0 | 32.0 | 3.8 | 14 | 2201.3 | 0.3386
+daily_budget_exhausted | 0.0 | 100.0 | 0.0 | - | 1.6 | 8 | - | no answers
+(peak in flight = peak number of requests inside the system at once; there is no queue)
+(cost per 1000 answers = cost of ALL tokens in the scenario, wasted ones included, divided by ok answers)
+
+TABLE 3  (rows with scenario = quality, the real service)
+setting | asked | correct % | wrong % | correctly refused % | wrongly refused % | tokens per answer | first token p50/p95 ms | total p50/p95 ms
+w120-k3-hybrid | 20 | 35.0 | 15.0 | 25.0 | 25.0 | 1410.2 | 930.9 / 1323.5 | 1141.4 / 1777.7
+w180-k4-hybrid | 20 | 40.0 | 5.0 | 25.0 | 30.0 | 2273.4 | 1086.5 / 1714.5 | 1382.5 / 2194.5
+w120-k2-hybrid | 20 | 20.0 | 15.0 | 25.0 | 35.0 | 991.9 | 2149.5 / 9890.9 | 2726.7 / 13467.2
+w120-k3-hybrid-norewrite | 20 | 15.0 | 15.0 | 25.0 | 40.0 | 1044.5 | 1871.7 / 6500.4 | 1873.8 / 9700.3
+w120-k3-hybrid-repeat | 20 | 25.0 | 30.0 | 25.0 | 20.0 | 1494.3 | 2783.4 / 13638.9 | 3683.2 / 17940.2
+
+SLOWEST SUCCESSFUL REQUEST IN EACH OVERLOAD SCENARIO (for section 4)
+burst-018: total 19996 ms | first draft token at 2359.8 ms
+   working 19988 + waiting 0 + failed attempts 0 = 19988 (unexplained rest 8 ms)
+   retries 0 | rate-limited replies 0 | steps ms: understand 1204.6, retrieve 8.1, draft 1665.4, verify 17118.1
+   before the first token: 2360 ms | after it: 17636 ms
+sustained_overload-171: total 16368 ms | first draft token at 9046.0 ms
+   working 3222 + waiting 10777 + failed attempts 2354 = 16354 (unexplained rest 14 ms)
+   retries 7 | rate-limited replies 7 | steps ms: understand 1458.9, retrieve 8.5, draft 7813.0, verify 7087.4
+   before the first token: 9046 ms | after it: 7322 ms

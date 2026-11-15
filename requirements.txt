@@ -1,0 +1,8 @@
+
+fastapi
+uvicorn[standard]
+groq
+httpx
+fastembed
+rank-bm25
+numpy
